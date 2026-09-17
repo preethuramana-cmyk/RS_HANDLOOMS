@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "R S Handlooms"
+description = "A warm, editorial storefront for R S Handlooms in Bengaluru, showcasing silk sarees, handloom craft, reviews, and visit details."
+version = "1.0.0"
+id = "artifacts/rs-handlooms"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24060
+
+[services.development]
+run = "pnpm --filter @workspace/rs-handlooms run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/rs-handlooms", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/rs-handlooms/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24060"
+BASE_PATH = "/"
